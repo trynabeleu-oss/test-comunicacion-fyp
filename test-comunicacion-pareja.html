@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test: ¿Cómo te comunicás en pareja? — Feliz y en Pareja</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --night: #0e0c16;
+    --ink: #1c1828;
+    --bg: #f5f3f0;
+    --muted: #8a8598;
+    --border: #e2dde8;
+    --pink: #c94f78;
+    --pink-light: #fce8ef;
+    --pink-mid: #f0a8bf;
+    --teal: #0e7a65;
+    --amber: #a05a14;
+    --violet: #5646b4;
+    --red: #b03535;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    padding: 1.5rem 1rem 4rem;
+    color: var(--ink);
+  }
+
+  .wrap { max-width: 660px; margin: 0 auto; }
+
+  /* ─── COVER ─── */
+  .cover {
+    background: var(--night);
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+    min-height: 460px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .cover-art {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* Decorative speech-bubble shapes */
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.08;
+  }
+  .b1 { width: 400px; height: 400px; background: #c94f78; top: -120px; right: -100px; }
+  .b2 { width: 260px; height: 260px; background: #5646b4; bottom: -80px; left: -60px; }
+  .b3 { width: 120px; height: 120px; background: #0e7a65; top: 45%; left: 5%; }
+
+  .grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .cover-inner {
+    position: relative;
+    z-index: 2;
+    padding: 3.5rem 2rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 2rem;
+  }
+  .brand-icon {
+    width: 40px; height: 40px;
+    background: var(--pink);
+    border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .brand-icon svg { width: 22px; height: 22px; }
+  .brand-name { font-size: 14px; font-weight: 600; color: #fff; }
+  .brand-dot { color: rgba(255,255,255,0.3); }
+  .brand-sub { font-size: 14px; color: rgba(255,255,255,0.4); }
+
+  .cover-badge {
+    display: inline-block;
+    border: 1px solid rgba(201,79,120,0.45);
+    background: rgba(201,79,120,0.15);
+    color: #f4b8cf;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 30px;
+    margin-bottom: 1.25rem;
+  }
+
+  .cover-title {
+    font-family: 'Lora', serif;
+    font-size: 34px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .cover-title em {
+    font-style: italic;
+    color: #f0a8bf;
+  }
+
+  .cover-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.52);
+    line-height: 1.8;
+    max-width: 380px;
+    margin: 0 auto 2rem;
+  }
+
+  .cover-pills {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .cpill {
+    background: rgba(255,255,255,0.07);
+    border: 0.5px solid rgba(255,255,255,0.12);
+    border-radius: 30px;
+    padding: 6px 16px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+  }
+  .cpill strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+
+  .btn-start {
+    background: var(--pink);
+    color: #fff;
+    border: none;
+    padding: 15px 42px;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .btn-start:hover { background: #a93a62; transform: translateY(-1px); }
+
+  .cover-foot {
+    margin-top: 1.5rem;
+    font-size: 11px;
+    color: rgba(255,255,255,0.22);
+  }
+
+  /* ─── TEST ─── */
+  .test-body { padding-top: 1.25rem; }
+
+  .test-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+  .mini-brand {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .mini-icon {
+    width: 28px; height: 28px;
+    background: var(--pink);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mini-icon svg { width: 16px; height: 16px; }
+  .mini-name { font-size: 12px; font-weight: 600; color: var(--pink); }
+  .mini-sep { color: var(--border); }
+  .mini-sub { font-size: 12px; color: var(--muted); }
+
+  .prog-area { margin-bottom: 1.5rem; }
+  .prog-track {
+    height: 4px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .prog-fill {
+    height: 4px;
+    background: var(--pink);
+    border-radius: 4px;
+    transition: width 0.4s cubic-bezier(.4,0,.2,1);
+  }
+  .prog-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .q-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1.75rem 1.5rem;
+    margin-bottom: 1rem;
+    animation: slideIn 0.25s ease;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-num {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--pink);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+  .q-text {
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
+  }
+
+  .opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 13px 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: #fff;
+  }
+  .opt:last-child { margin-bottom: 0; }
+  .opt:hover { border-color: var(--pink); background: var(--pink-light); }
+  .opt.sel { border-color: var(--pink); background: var(--pink-light); }
+  .opt.sel .opt-ltr {
+    background: var(--pink);
+    color: #fff;
+    border-color: var(--pink);
+  }
+
+  .opt-ltr {
+    min-width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    color: var(--muted);
+    flex-shrink: 0;
+    transition: all 0.15s;
+    margin-top: 1px;
+  }
+  .opt-txt {
+    font-size: 14px;
+    color: #2a2240;
+    line-height: 1.6;
+    padding-top: 2px;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    gap: 1rem;
+  }
+  .btn-nav {
+    padding: 12px 26px;
+    border-radius: 11px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: #444;
+  }
+  .btn-nav:hover:not(:disabled) { background: #f0edf5; }
+  .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+  .btn-main {
+    background: var(--pink);
+    color: #fff;
+    border-color: var(--pink);
+    flex: 1;
+    max-width: 220px;
+    text-align: center;
+  }
+  .btn-main:hover:not(:disabled) { background: #a93a62; border-color: #a93a62; }
+
+  /* ─── RESULTS ─── */
+  .res-hero {
+    background: var(--night);
+    border-radius: 20px;
+    padding: 2.5rem 1.75rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .res-hero-art { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .res-hero-art .bubble { opacity: 0.07; }
+  .res-hero-inner { position: relative; z-index: 2; }
+
+  .res-from { font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.25rem; }
+  .res-icon-ring {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 34px;
+    border: 2px solid rgba(255,255,255,0.12);
+  }
+  .res-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: 0.09em; text-transform: uppercase; margin-bottom: 6px; }
+  .res-name {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .res-tagline { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.7; }
+
+  /* Score bars */
+  .scores { margin: 1.5rem 0; }
+  .sc-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+    border-radius: 11px;
+    background: #f5f3f0;
+    margin-bottom: 6px;
+  }
+  .sc-row.top { background: var(--pink-light); border: 1px solid var(--pink-mid); }
+  .sc-lbl { font-size: 12px; font-weight: 600; color: var(--ink); width: 170px; flex-shrink: 0; }
+  .sc-track { flex: 1; background: var(--border); border-radius: 4px; height: 5px; }
+  .sc-fill { height: 5px; border-radius: 4px; background: var(--pink-mid); }
+  .sc-row.top .sc-fill { background: var(--pink); }
+  .sc-val { font-size: 11px; font-weight: 600; color: var(--muted); width: 20px; text-align: right; }
+
+  /* Result cards */
+  .r-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .r-card-head {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 6px;
+  }
+  .r-card-icon {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .r-card-title {
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .r-badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    margin-left: 54px;
+    letter-spacing: 0.04em;
+  }
+  .r-badge-main { background: var(--pink-light); color: #7a2040; }
+  .r-badge-sec { background: #f5f3f0; color: #666; }
+
+  .r-card p {
+    font-size: 13.5px;
+    color: #4a3a5a;
+    line-height: 1.75;
+    margin-bottom: 10px;
+  }
+  .r-card p:last-child { margin-bottom: 0; }
+  .r-card strong { font-weight: 700; color: var(--ink); }
+  .r-div { height: 1px; background: var(--border); margin: 12px 0; }
+
+  /* Tip rows */
+  .tip-row {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: #fafafa;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+  .tip-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--pink);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .tip-txt { font-size: 13px; color: #4a3a5a; line-height: 1.65; }
+
+  /* Tie box */
+  .tie-box {
+    background: var(--pink-light);
+    border: 1px solid var(--pink-mid);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .tie-box p { font-size: 13.5px; color: #72243E; line-height: 1.75; }
+  .tie-box strong { color: #4B1528; }
+
+  /* Reflection */
+  .reflection {
+    background: var(--night);
+    border-radius: 18px;
+    padding: 2rem 1.75rem;
+    margin: 1.5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .refl-art { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .refl-art .bubble { opacity: 0.05; }
+  .refl-inner { position: relative; z-index: 2; }
+  .refl-eyebrow { font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+  .refl-quote {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    font-style: italic;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.85;
+  }
+  .refl-credit { font-size: 11px; color: rgba(255,255,255,0.25); margin-top: 14px; }
+
+  .res-footer { text-align: center; padding: 1rem 0 2rem; }
+  .res-footer p { font-size: 13px; color: var(--muted); margin-bottom: 1rem; }
+  .btn-restart {
+    padding: 13px 32px;
+    border-radius: 11px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid var(--pink);
+    background: transparent;
+    color: var(--pink);
+    transition: all 0.15s;
+  }
+  .btn-restart:hover { background: var(--pink-light); }
+
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- PORTADA -->
+  <div id="cover">
+    <div class="cover">
+      <div class="cover-art">
+        <div class="bubble b1"></div>
+        <div class="bubble b2"></div>
+        <div class="bubble b3"></div>
+        <div class="grid-lines"></div>
+      </div>
+      <div class="cover-inner">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg viewBox="0 0 26 26" fill="none"><path d="M13 22s-9-5.5-9-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.5-9 11-9 11z" fill="#fff"/></svg>
+          </div>
+          <span class="brand-name">Feliz y en Pareja</span>
+          <span class="brand-dot">·</span>
+          <span class="brand-sub">Escuela del amor</span>
+        </div>
+
+        <div class="cover-badge">Test de comunicación</div>
+
+        <div class="cover-title">¿Cómo te comunicás<br><em>en pareja?</em></div>
+
+        <div class="cover-desc">
+          16 situaciones reales para entender tu estilo de comunicación. Sin respuestas correctas. Solo autoconocimiento.
+        </div>
+
+        <div class="cover-pills">
+          <div class="cpill"><strong>16</strong> situaciones</div>
+          <div class="cpill"><strong>5</strong> estilos</div>
+          <div class="cpill"><strong>~6</strong> minutos</div>
+        </div>
+
+        <button class="btn-start" onclick="startTest()">Comenzar test</button>
+        <div class="cover-foot">Comunicación asertiva · pasiva · agresiva · pasivo-agresiva · evitativa</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEST -->
+  <div id="test" class="test-body hidden">
+    <div class="test-header">
+      <div class="mini-brand">
+        <div class="mini-icon">
+          <svg viewBox="0 0 26 26" fill="none"><path d="M13 22s-9-5.5-9-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.5-9 11-9 11z" fill="#fff"/></svg>
+        </div>
+        <span class="mini-name">Feliz y en Pareja</span>
+        <span class="mini-sep">·</span>
+        <span class="mini-sub">Escuela del amor</span>
+      </div>
+    </div>
+
+    <div class="prog-area">
+      <div class="prog-track"><div class="prog-fill" id="prog" style="width:0%"></div></div>
+      <div class="prog-meta">
+        <span id="prog-lbl">Pregunta 1 de 16</span>
+        <span id="prog-pct">0%</span>
+      </div>
+    </div>
+
+    <div id="q-container"></div>
+
+    <div class="nav">
+      <button class="btn-nav" id="btn-prev" onclick="prevQ()" disabled>← Anterior</button>
+      <button class="btn-nav btn-main" id="btn-next" onclick="nextQ()" disabled>Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- RESULTADOS -->
+  <div id="results" class="hidden"></div>
+
+</div>
+
+<script>
+var QS = [
+  {
+    t: "Necesitás decirle algo importante a tu pareja, algo que te molestó. ¿Qué hacés?",
+    o: [
+      { l: 'AS', t: "Lo hablo directamente, en un buen momento, diciéndole cómo me sentí sin atacarla/o." },
+      { l: 'PA', t: "Espero a que él/ella lo note solo/a. No quiero armar un problema." },
+      { l: 'AG', t: "Se lo digo fuerte y claro. Si no lo digo así, no lo toma en serio." },
+      { l: 'PAG', t: "No digo nada pero cambio mi actitud. Que lo sienta sin que yo tenga que explicar." },
+      { l: 'EV', t: "Lo dejo pasar. Total, ya se va a olvidar. No vale la pena abrir esa conversación." }
+    ]
+  },
+  {
+    t: "Tu pareja toma una decisión que te afecta sin consultarte. ¿Cuál es tu primera reacción?",
+    o: [
+      { l: 'AG', t: "Me enojo y se lo hago saber al toque. No me parece justo y lo digo." },
+      { l: 'AS', t: "Le pregunto por qué lo decidió solo/a y le explico cómo me afectó." },
+      { l: 'EV', t: "Me guardo el enojo. Total, ya fue. No puedo cambiar lo que pasó." },
+      { l: 'PA', t: "Digo que está bien, aunque por dentro me molesta bastante." },
+      { l: 'PAG', t: "No digo nada pero después no colaboro con esa decisión." }
+    ]
+  },
+  {
+    t: "Tu pareja te critica algo frente a otras personas. ¿Cómo reaccionás?",
+    o: [
+      { l: 'PA', t: "Me río o cambio el tema. No quiero hacer un escándalo ahí." },
+      { l: 'AG', t: "Le respondo en el momento, no me importa dónde estamos." },
+      { l: 'AS', t: "Espero a que estemos solos y le digo que eso me incomodó." },
+      { l: 'PAG', t: "No digo nada, pero durante el resto del día estoy fría/o." },
+      { l: 'EV', t: "Lo ignoro. Me cierro. Después actúo como si nada hubiera pasado." }
+    ]
+  },
+  {
+    t: "Están discutiendo y la conversación se está poniendo tensa. ¿Qué hacés?",
+    o: [
+      { l: 'EV', t: "Me voy de la habitación o pido un tiempo. Necesito salir de ahí." },
+      { l: 'AS', t: "Trato de bajar el tono y escuchar qué está diciendo la otra persona." },
+      { l: 'AG', t: "Subo el volumen si es necesario. Quiero que se entienda lo que digo." },
+      { l: 'PA', t: "Empiezo a ceder aunque no esté de acuerdo. Para que termine más rápido." },
+      { l: 'PAG', t: "Me quedo en silencio pero con cara de pocos amigos." }
+    ]
+  },
+  {
+    t: "Tu pareja no cumplió algo que prometió. Es la tercera vez que pasa. ¿Qué hacés?",
+    o: [
+      { l: 'PAG', t: "No digo nada pero dejo de hacer cosas por él/ella sin explicarle por qué." },
+      { l: 'PA', t: "Le digo que no pasa nada pero por dentro acumulo el malestar." },
+      { l: 'AS', t: "Lo hablo con calma pero con firmeza. Le digo que esto me está afectando." },
+      { l: 'AG', t: "Exploto. Ya tuve demasiada paciencia y se lo hago saber." },
+      { l: 'EV', t: "Aprendo a no esperar más. Prefiero no depender de él/ella." }
+    ]
+  },
+  {
+    t: "Necesitás pedirle algo a tu pareja que sabés que le puede molestar. ¿Cómo lo hacés?",
+    o: [
+      { l: 'AS', t: "Lo pido directamente, explicando por qué lo necesito." },
+      { l: 'EV', t: "No lo pido. Prefiero arreglármelas solo/a antes que generar tensión." },
+      { l: 'PA', t: "Doy mil vueltas antes de pedirlo y termino haciéndolo de forma muy indirecta." },
+      { l: 'AG', t: "Lo digo sin filtro. Si le molesta, que lo diga." },
+      { l: 'PAG', t: "No lo pido directamente pero hago comentarios para que él/ella lo note." }
+    ]
+  },
+  {
+    t: "Tu pareja está con el teléfono mientras vos le hablás. ¿Cómo reaccionás?",
+    o: [
+      { l: 'AS', t: "Le pido, sin dramas, que lo deje un momento porque necesito su atención." },
+      { l: 'PA', t: "Sigo hablando aunque sé que no me está escuchando bien." },
+      { l: 'EV', t: "Paro de hablar y me voy a otra parte. No tengo ganas de insistir." },
+      { l: 'AG', t: "Le saco el teléfono o le digo con tono cortante que me preste atención." },
+      { l: 'PAG', t: "Termino la conversación a medias y después estoy de mal humor sin explicar por qué." }
+    ]
+  },
+  {
+    t: "Tu pareja te dice algo que te duele, aunque probablemente no fue su intención. ¿Qué hacés?",
+    o: [
+      { l: 'PAG', t: "Me quedo callado/a pero dejo de ser cariñoso/a durante el resto del día." },
+      { l: 'EV', t: "Lo dejo pasar. No quiero parecer sensible o exagerado/a." },
+      { l: 'AS', t: "Se lo digo: 'eso que dijiste me dolió' y le explico por qué." },
+      { l: 'PA', t: "Digo que está bien aunque no lo está. No quiero que se sienta mal." },
+      { l: 'AG', t: "Le digo enseguida que eso estuvo mal. No me banco que me hablen así." }
+    ]
+  },
+  {
+    t: "Tienen que tomar una decisión juntos y no están de acuerdo. ¿Cómo manejás eso?",
+    o: [
+      { l: 'PA', t: "Termino aceptando lo que quiere la otra persona para no pelear." },
+      { l: 'AS', t: "Escucho su punto, explico el mío y busco una solución que funcione para los dos." },
+      { l: 'AG', t: "Defiendo mi postura con fuerza. Si tengo razón, tengo razón." },
+      { l: 'EV', t: "Digo 'como quieras' y después me quejo con alguien más." },
+      { l: 'PAG', t: "Acepto aparentemente pero después hago lo que yo quería igual." }
+    ]
+  },
+  {
+    t: "Tu pareja está enojada y te habla mal. ¿Cuál es tu respuesta?",
+    o: [
+      { l: 'AG', t: "Le respondo con el mismo tono. No voy a quedarme callado/a mientras me hablan así." },
+      { l: 'AS', t: "Le digo que entiendo que está enojada/o, pero que así no me puede hablar." },
+      { l: 'EV', t: "Me voy. No quiero estar ahí mientras está así." },
+      { l: 'PA', t: "Me aguanto. Prefiero no responder y que se le pase." },
+      { l: 'PAG', t: "No digo nada pero lo recuerdo y lo uso después cuando conviene." }
+    ]
+  },
+  {
+    t: "Estás incómodo/a con algo de la relación hace tiempo. ¿Qué hacés con eso?",
+    o: [
+      { l: 'EV', t: "Nada. Espero que se solucione solo o que simplemente se normalice." },
+      { l: 'AS', t: "Busco un momento tranquilo para hablarlo honestamente." },
+      { l: 'PA', t: "Se lo menciono de forma tan suave que la otra persona no le da importancia." },
+      { l: 'AG', t: "Un día exploto y sale todo junto, mezclado con otras cosas." },
+      { l: 'PAG', t: "No lo hablo pero mi actitud empieza a cambiar sin que yo lo explique." }
+    ]
+  },
+  {
+    t: "Tu pareja te pregunta cómo estás y en realidad estás mal por algo que tiene que ver con él/ella. ¿Qué hacés?",
+    o: [
+      { l: 'PA', t: "Digo 'bien' aunque no sea verdad. No quiero complicar las cosas." },
+      { l: 'AS', t: "Le digo que no estoy del todo bien y le cuento qué me está pasando." },
+      { l: 'PAG', t: "Digo 'nada' con un tono que deja claro que hay algo." },
+      { l: 'EV', t: "Digo que estoy cansado/a o que es del trabajo. No meto la relación." },
+      { l: 'AG', t: "Le digo de frente qué me molesta, aunque en ese momento no sea el mejor momento." }
+    ]
+  },
+  {
+    t: "Tu pareja hizo algo que te pareció muy bien. ¿Cómo lo expresás?",
+    o: [
+      { l: 'AS', t: "Se lo digo claramente: 'eso que hiciste me pareció muy bien y lo valoro'." },
+      { l: 'PA', t: "Pienso que estuvo bien pero no lo digo. No sé cómo arrancar esa conversación." },
+      { l: 'AG', t: "A veces se me escapa un reconocimiento pero no es algo que haga seguido." },
+      { l: 'EV', t: "Espero que él/ella sepa que me gustó. No necesito decirlo." },
+      { l: 'PAG', t: "Se lo digo, pero inmediatamente después agrego algo que me molestó." }
+    ]
+  },
+  {
+    t: "Tuvieron una discusión fuerte. Al día siguiente, ¿cómo la encarás?",
+    o: [
+      { l: 'EV', t: "Actúo como si nada hubiera pasado. El tiempo lo arregla." },
+      { l: 'AS', t: "Propongo retomar la conversación con más calma para cerrar el tema bien." },
+      { l: 'PA', t: "Espero que él/ella dé el primer paso. Yo no voy a ser el/la que arranque." },
+      { l: 'AG', t: "Puedo seguir enganchado/a y volver a discutir si el tema no quedó claro." },
+      { l: 'PAG', t: "Actúo bien en la superficie pero con distancia. Que lo sienta." }
+    ]
+  },
+  {
+    t: "Tu pareja te pide algo que no querés hacer. ¿Cómo respondés?",
+    o: [
+      { l: 'PA', t: "Digo que sí aunque no quiera. No me sale decir que no." },
+      { l: 'AS', t: "Le digo que no, le explico por qué, y si puedo le propongo otra opción." },
+      { l: 'AG', t: "Le digo que no de forma directa, a veces con más dureza de la necesaria." },
+      { l: 'PAG', t: "Digo que sí pero después lo olvido o lo hago mal." },
+      { l: 'EV', t: "Pongo excusas. Me cuesta más decir 'no quiero' que inventar una razón." }
+    ]
+  },
+  {
+    t: "Llevan un tiempo sin resolver un conflicto. ¿Qué sentís que pasa en vos?",
+    o: [
+      { l: 'PAG', t: "Lo bloqueo pero sale por otro lado: ironía, distancia, pequeñas venganzas." },
+      { l: 'EV', t: "Aprendo a vivir con eso. Me adapto aunque no esté bien." },
+      { l: 'PA', t: "Acumulo. No digo nada pero cada vez que pasa algo nuevo, eso también pesa." },
+      { l: 'AS', t: "Me incomoda mucho. Necesito que los conflictos se cierren, no que se posterguen." },
+      { l: 'AG', t: "La tensión crece hasta que en algún momento estalla sola." }
+    ]
+  }
+];
+
+var RES = {
+  AS: {
+    name: "Comunicación asertiva",
+    icon: "🗣️",
+    color: "#0e7a65",
+    bg: "#e6f7f3",
+    desc: "Decís lo que pensás y sentís, sin atacar ni callarte. No es que no tengas conflictos — es que los manejás de frente, con respeto, buscando que ambos salgan bien.",
+    enRel: "Sos la persona que inicia las conversaciones difíciles cuando es necesario. Le pedís a tu pareja lo que necesitás. Ponés límites sin culpa. Escuchás de verdad, no solo para responder.",
+    error: "El riesgo es asumir que todos comunican igual que vos. Si tu pareja tiene otro estilo, podés frustrarte o sentir que no pone el mismo esfuerzo. La asertividad requiere paciencia con quienes aún no la tienen.",
+    tip: "Seguí siendo honesto/a, pero trabajá la tolerancia hacia procesos más lentos. No todos aprendieron a comunicarse así. Tu claridad puede enseñar con el ejemplo, no con la exigencia."
+  },
+  PA: {
+    name: "Comunicación pasiva",
+    icon: "🤐",
+    color: "#5646b4",
+    bg: "#eeedfb",
+    desc: "Preferís no generar conflicto. Decís que está bien cuando no lo está. Cedés más de lo que querés. No es que no tengas opinión — es que aprendiste que expresarla puede costar caro.",
+    enRel: "Acumulás cosas que no decís. Esperás que la otra persona adivine o note lo que te pasa. A veces explotás sin aviso porque llegaste al límite. O te resignás y dejás de pedir.",
+    error: "La otra persona no puede leer tu mente. Si no decís lo que necesitás, el resentimiento crece y la relación se vacía. Callarte no es armonía — es tensión disfrazada.",
+    tip: "Empezá con cosas pequeñas. Practicá decir lo que pensás en situaciones de bajo riesgo. La pasividad se fue construyendo con el tiempo — también se puede desaprender de a poco."
+  },
+  AG: {
+    name: "Comunicación agresiva",
+    icon: "⚡",
+    color: "#b03535",
+    bg: "#fceaea",
+    desc: "Decís lo que pensás, pero a veces el cómo lastima más que el qué. No tenés problema en expresarte — el problema es que tu forma de hacerlo puede cerrarte puertas antes de que la conversación empiece.",
+    enRel: "Imponés tu punto de vista más que compartirlo. Cuando estás enojado/a, puede salir todo junto. La intensidad con la que sentís las cosas se traslada al tono en que las decís.",
+    error: "La agresividad genera defensiva en el otro. Cuanto más fuerte hablás, más se cierra la otra persona. La conversación termina siendo una batalla que nadie gana.",
+    tip: "Antes de hablar cuando estás muy activado/a, date 10 minutos. Lo que querés decir puede ser completamente válido — pero el momento y el tono definen si te escuchan o solo te responden."
+  },
+  PAG: {
+    name: "Comunicación pasivo-agresiva",
+    icon: "🔇",
+    color: "#a05a14",
+    bg: "#fef4e6",
+    desc: "No atacás ni te callás del todo. Mandás señales. El silencio frío, la ironía, la distancia sin explicación. Es una forma de expresar lo que sentís sin hacerte cargo de expresarlo.",
+    enRel: "Tu pareja siente que algo está mal pero no sabe exactamente qué. Las conversaciones nunca llegan al fondo porque el malestar se comunica de forma indirecta. Hay mucho que se dice sin decirse.",
+    error: "La otra persona termina confundida, frustrada o a la defensiva — sin entender qué hizo mal. El problema no se resuelve, se posterga y crece. La relación se vuelve tensa y difícil de navegar.",
+    tip: "El origen de la pasivo-agresividad suele ser el miedo a que expresarse directamente tenga consecuencias. Identificá qué es lo que te da miedo decir, y empezá a decirlo con palabras."
+  },
+  EV: {
+    name: "Comunicación evitativa",
+    icon: "🚪",
+    color: "#374151",
+    bg: "#f3f4f6",
+    desc: "Cuando hay tensión, desaparecés. Físicamente, emocionalmente, o de ambas formas. No es cobardía — es un mecanismo que aprendiste para protegerte de algo que en algún momento fue demasiado.",
+    enRel: "Los conflictos no se resuelven, se evitan hasta que se enfrían o se acumulan. Tu pareja puede sentir que no puede hablar ciertas cosas con vos. A veces preferís perder la relación antes que tener esa conversación.",
+    error: "Lo que no se habla no desaparece. Se convierte en distancia, en suposiciones, en una relación en la que dos personas conviven sin realmente conectar.",
+    tip: "El primer paso no es tener la conversación difícil — es entender por qué la evitás. ¿Qué es lo que esperás que pase si la tenés? Trabajar eso, idealmente con apoyo profesional, cambia todo."
+  }
+};
+
+var LNAMES = {
+  AS: "Comunicación asertiva",
+  PA: "Comunicación pasiva",
+  AG: "Comunicación agresiva",
+  PAG: "Comunicación pasivo-agresiva",
+  EV: "Comunicación evitativa"
+};
+
+var cur = 0, ans = new Array(16).fill(null);
+var TOTAL = 16;
+
+function startTest() {
+  document.getElementById('cover').classList.add('hidden');
+  document.getElementById('test').classList.remove('hidden');
+  renderQ();
+}
+
+function renderQ() {
+  var q = QS[cur];
+  var pct = Math.round((cur / TOTAL) * 100);
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('prog-lbl').textContent = 'Pregunta ' + (cur + 1) + ' de ' + TOTAL;
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('btn-prev').disabled = cur === 0;
+  document.getElementById('btn-next').disabled = ans[cur] === null;
+  document.getElementById('btn-next').textContent = cur === TOTAL - 1 ? 'Ver mi resultado →' : 'Siguiente →';
+
+  var ltrs = ['A', 'B', 'C', 'D', 'E'];
+  var h = '<div class="q-card"><div class="q-num">Situación ' + (cur + 1) + '</div>';
+  h += '<div class="q-text">' + q.t + '</div>';
+  q.o.forEach(function(o, i) {
+    h += '<div class="opt' + (ans[cur] === i ? ' sel' : '') + '" onclick="pick(' + i + ')">';
+    h += '<div class="opt-ltr">' + ltrs[i] + '</div>';
+    h += '<div class="opt-txt">' + o.t + '</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  document.getElementById('q-container').innerHTML = h;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function pick(i) { ans[cur] = i; renderQ(); }
+function prevQ() { if (cur > 0) { cur--; renderQ(); } }
+function nextQ() {
+  if (ans[cur] === null) return;
+  if (cur < TOTAL - 1) { cur++; renderQ(); }
+  else showResult();
+}
+
+function showResult() {
+  var sc = { AS: 0, PA: 0, AG: 0, PAG: 0, EV: 0 };
+  QS.forEach(function(q, qi) {
+    if (ans[qi] !== null) sc[q.o[ans[qi]].l]++;
+  });
+
+  var order = ['AS', 'PA', 'AG', 'PAG', 'EV'];
+  var sorted = order.slice().sort(function(a, b) { return sc[b] - sc[a]; });
+  var top = sorted[0];
+  var maxS = sc[top];
+  var tied = sorted.filter(function(l) { return sc[l] === maxS; });
+  var r = RES[top];
+
+  document.getElementById('test').classList.add('hidden');
+  var rs = document.getElementById('results');
+  rs.classList.remove('hidden');
+
+  var h = '';
+
+  // Hero
+  h += '<div class="res-hero">';
+  h += '<div class="res-hero-art"><div class="bubble b1"></div><div class="bubble b2"></div></div>';
+  h += '<div class="res-hero-inner">';
+  h += '<div class="res-from">Feliz y en Pareja · Escuela del amor</div>';
+  h += '<div class="res-icon-ring" style="background:' + r.color + '22">' + r.icon + '</div>';
+  h += '<div class="res-label">Tu estilo de comunicación</div>';
+  h += '<div class="res-name" style="color:' + r.color + '">' + r.name + '</div>';
+  h += '<div class="res-tagline">Así es como aprendiste a decir, callar o reaccionar en pareja.</div>';
+  h += '</div></div>';
+
+  // Scores
+  h += '<div class="scores">';
+  sorted.forEach(function(l) {
+    var pct = Math.round((sc[l] / TOTAL) * 100);
+    h += '<div class="sc-row' + (l === top ? ' top' : '') + '">';
+    h += '<div class="sc-lbl">' + LNAMES[l] + '</div>';
+    h += '<div class="sc-track"><div class="sc-fill" style="width:' + pct + '%"></div></div>';
+    h += '<div class="sc-val">' + sc[l] + '</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+
+  // Tie box
+  if (tied.length > 1) {
+    h += '<div class="tie-box"><p>Tenés empate entre <strong>' + tied.map(function(l) { return LNAMES[l]; }).join(' y ') + '</strong>. Eso significa que usás ambos estilos según el contexto o el estado emocional en que estés. Ninguno cancela al otro — los dos son parte de cómo te comunicás hoy.</p></div>';
+  }
+
+  // Main result card
+  h += '<div class="r-card">';
+  h += '<div class="r-card-head">';
+  h += '<div class="r-card-icon" style="background:' + r.bg + '">' + r.icon + '</div>';
+  h += '<div class="r-card-title">' + r.name + '</div>';
+  h += '</div>';
+  h += '<div class="r-badge r-badge-main">Tu estilo principal</div>';
+  h += '<p>' + r.desc + '</p>';
+  h += '<div class="r-div"></div>';
+  h += '<p><strong>Cómo se ve en tu relación:</strong> ' + r.enRel + '</p>';
+  h += '<div class="r-div"></div>';
+
+  h += '<div class="tip-row"><div class="tip-dot"></div><div class="tip-txt"><strong>Error frecuente:</strong> ' + r.error + '</div></div>';
+  h += '<div class="tip-row"><div class="tip-dot"></div><div class="tip-txt"><strong>Qué trabajar:</strong> ' + r.tip + '</div></div>';
+  h += '</div>';
+
+  // Second result card
+  if (sorted.length > 1 && sc[sorted[1]] > 0 && sorted[1] !== top) {
+    var r2 = RES[sorted[1]];
+    h += '<div class="r-card">';
+    h += '<div class="r-card-head">';
+    h += '<div class="r-card-icon" style="background:' + r2.bg + '">' + r2.icon + '</div>';
+    h += '<div class="r-card-title">' + r2.name + '</div>';
+    h += '</div>';
+    h += '<div class="r-badge r-badge-sec">Tu segundo estilo</div>';
+    h += '<p>' + r2.desc + '</p>';
+    h += '<div class="r-div"></div>';
+    h += '<div class="tip-row"><div class="tip-dot"></div><div class="tip-txt"><strong>Qué trabajar:</strong> ' + r2.tip + '</div></div>';
+    h += '</div>';
+  }
+
+  // Reflection
+  h += '<div class="reflection">';
+  h += '<div class="refl-art"><div class="bubble b1"></div></div>';
+  h += '<div class="refl-inner">';
+  h += '<div class="refl-eyebrow">Para cerrar</div>';
+  h += '<div class="refl-quote">"La forma en que te comunicás no es tu personalidad… es lo que aprendiste sobre qué pasa cuando decís lo que sentís. Y eso, a diferencia de lo que creés, sí se puede cambiar."</div>';
+  h += '<div class="refl-credit">— Feliz y en Pareja · Escuela del amor</div>';
+  h += '</div></div>';
+
+  h += '<div class="res-footer">';
+  h += '<p>Compartí este test con tu pareja y comparen sus estilos</p>';
+  h += '<button class="btn-restart" onclick="restartAll()">Hacer el test de nuevo</button>';
+  h += '</div>';
+
+  rs.innerHTML = h;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restartAll() {
+  cur = 0;
+  ans = new Array(TOTAL).fill(null);
+  document.getElementById('results').classList.add('hidden');
+  document.getElementById('test').classList.add('hidden');
+  document.getElementById('cover').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
